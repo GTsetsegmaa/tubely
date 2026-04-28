@@ -61,7 +61,7 @@ func (cfg *apiConfig) handlerUploadThumbnail(w http.ResponseWriter, r *http.Requ
 	}
 
 	randomBytes := make([]byte, 32)
-	_, err = rand.Read(make([]byte, 32))
+	_, err = rand.Read(randomBytes)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Could not make random bytes", err)
 	}
