@@ -75,7 +75,7 @@ func main() {
 
 	sdkCfg, err := config.LoadDefaultConfig(nil, config.WithRegion(s3Region))
 	if err != nil {
-		log.Fatal("unable to load SDK config, %v", err)
+		log.Fatal("unable to load SDK config")
 	}
 
 	s3Client := s3.NewFromConfig(sdkCfg)
