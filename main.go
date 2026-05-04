@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -73,7 +74,7 @@ func main() {
 		log.Fatal("S3_CF_DISTRO environment variable is not set")
 	}
 
-	sdkCfg, err := config.LoadDefaultConfig(nil, config.WithRegion(s3Region))
+	sdkCfg, err := config.LoadDefaultConfig(context.Background(), config.WithRegion(s3Region))
 	if err != nil {
 		log.Fatal("unable to load SDK config")
 	}
