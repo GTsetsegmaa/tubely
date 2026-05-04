@@ -33,7 +33,6 @@ func (cfg *apiConfig) handlerUploadThumbnail(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-
 	fmt.Println("uploading thumbnail for video", videoID, "by user", userID)
 
 	const maxMemory = 10 << 20 //10mb
@@ -63,7 +62,8 @@ func (cfg *apiConfig) handlerUploadThumbnail(w http.ResponseWriter, r *http.Requ
 	randomBytes := make([]byte, 32)
 	_, err = rand.Read(randomBytes)
 	if err != nil {
-		respondWithError(w, http.StatusInternalServerError, "Could not make random bytes", err)
+		respondWithError(w, http.StatusInternalServerError, "Couldn't make random bytes", err)
+		return
 	}
 
 	encoded := base64.RawURLEncoding.EncodeToString(randomBytes)
@@ -74,6 +74,7 @@ func (cfg *apiConfig) handlerUploadThumbnail(w http.ResponseWriter, r *http.Requ
 	dst, err := os.Create(assetDiskPath)
 	if _, err := io.Copy(dst, file); err != nil {
 		respondWithError(w, http.StatusInternalServerError, "Error saving file", err)
+		return
 	}
 
 	video, err := cfg.db.GetVideo(videoID)
